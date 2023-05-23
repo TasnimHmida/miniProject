@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/core/colors.dart';
-import 'package:mini_project/features/auth/presentation/get_started_screen.dart';
-import 'package:mini_project/features/onboarding/data/models/onboarding.dart';
+import 'package:mini_project/features/auth/presentation/screens/get_started_screen.dart';
+import 'package:mini_project/features/onboarding/data/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -66,10 +66,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                     onPressed: () async {
                       final prefs = await SharedPreferences.getInstance();
                       prefs.setBool('showHome', true);
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const GetStartedScreen();
-                      }));
+                     navigateToGetStartedScreen(context);
                     },
                     child: const Text(
                       'Go',
@@ -137,5 +134,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         ],
       ),
     );
+  }
+
+  void navigateToGetStartedScreen(BuildContext context) {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) {
+          return const GetStartedScreen();
+        }));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mini_project/features/auth/presentation/get_started_screen.dart';
-import 'package:mini_project/features/onboarding/data/presentation/on_boarding_view.dart';
+import 'package:mini_project/features/auth/presentation/screens/get_started_screen.dart';
+import 'package:mini_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:mini_project/features/onboarding/presentation/on_boarding_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
