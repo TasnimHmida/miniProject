@@ -1,6 +1,7 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 
 import '../../../../core/colors.dart';
 import '../widgets/login_button.dart';
@@ -65,7 +66,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                       navigateToLoginScreen();
                     },),
                     const SizedBox(height: 15,),
-                    SignUpButton(),
+                    SignUpButton(signUpFunction: (){
+                      navigateToRegisterScreen();
+                    },),
                   ],
                 ),
                 const SizedBox()
@@ -73,11 +76,17 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         ));
   }
 
+
   navigateToLoginScreen() {
     Navigator.push(context, MaterialPageRoute(builder: (context){
       return const LoginScreen();
     }));
   }
+  navigateToRegisterScreen() {
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return const RegisterScreen();
+    }));
+}
 }
 
 

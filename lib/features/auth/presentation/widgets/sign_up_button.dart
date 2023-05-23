@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/colors.dart';
 
 class SignUpButton extends StatelessWidget {
+  final signUpFunction;
   const SignUpButton({
-    super.key,
+    super.key, required this.signUpFunction,
   });
 
   @override
@@ -18,8 +19,7 @@ class SignUpButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(16)),
           foregroundColor: mainColorBlue,
         ),
-        onPressed: (){
-        },
+        onPressed: signUpFunction,
         child: const Text(
           'Sign Up',
           style:

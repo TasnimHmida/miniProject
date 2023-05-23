@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_project/features/auth/presentation/screens/get_started_screen.dart';
 import 'package:mini_project/features/auth/presentation/screens/login_screen.dart';
+import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:mini_project/features/onboarding/presentation/on_boarding_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: showHome? GetStartedScreen() : OnBoardingView(),
+      home: showHome? const GetStartedScreen() : const OnBoardingView(),
     );
   }
 }
