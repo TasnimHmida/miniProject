@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mini_project/features/auth/presentation/screens/get_started_screen.dart';
 import 'package:mini_project/features/auth/presentation/screens/login_screen.dart';
 import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
-import 'package:mini_project/features/onboarding/presentation/on_boarding_view.dart';
+import 'package:mini_project/features/main_app/home_screen.dart';
+import 'package:mini_project/features/onboarding/presentation/screens/on_boarding_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home:
+        // HomeScreen()
         showHome? const GetStartedScreen() :
         const OnBoardingView(),
       );

@@ -35,6 +35,7 @@ dependencies:
   colorful_safe_area:
   intl_phone_field: ^3.1.0
   flutter_screenutil: ^5.8.2
+  smooth_page_indicator:
 
 
   # The following adds the Cupertino Icons font to your application.

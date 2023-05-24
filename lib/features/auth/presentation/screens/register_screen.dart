@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../../../core/colors.dart';
+import '../../../main_app/home_screen.dart';
 import '../widgets/input_field.dart';
 import '../widgets/login_button.dart';
 
@@ -161,7 +162,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 borderRadius: BorderRadius.circular(16)),
                             foregroundColor: Colors.white,
                             backgroundColor: mainColorBlue),
-                        onPressed: () {},
+                        onPressed: () {
+                          navigateToHomeScreen();
+                        },
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
@@ -173,5 +176,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ]),
         ));
+  }
+  navigateToHomeScreen() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return const HomeScreen();
+    }));
   }
 }

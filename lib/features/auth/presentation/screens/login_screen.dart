@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/core/colors.dart';
+import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:mini_project/features/auth/presentation/widgets/login_button.dart';
 
+import '../../../main_app/home_screen.dart';
 import '../widgets/input_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,7 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Column(
                       children: [
-                        LoginButton(loginFunction: () {}),
+                        LoginButton(loginFunction: () {
+                          navigateToHomeScreen();
+                        }),
                         SizedBox(
                           height: ScreenUtil().setHeight(20),
                         ),
@@ -138,6 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: ScreenUtil().setWidth(10),
                             ),
                             GestureDetector(
+                              onTap: (){
+                                navigateToRegisterScreen();
+                              },
                               child: Text('Sign up',
                                   style: GoogleFonts.quicksand(
                                       textStyle: TextStyle(
@@ -183,5 +190,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  navigateToHomeScreen() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return const HomeScreen();
+    }));
+  } navigateToRegisterScreen() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return const RegisterScreen();
+    }));
   }
 }
