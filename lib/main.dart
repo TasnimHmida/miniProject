@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home:
-        // showHome? const GetStartedScreen() :
+        showHome? const GetStartedScreen() :
         const OnBoardingView(),
       );
     });
