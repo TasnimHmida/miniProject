@@ -28,7 +28,7 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height:ScreenUtil().setHeight(75),
+      height: ScreenUtil().setHeight(75),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,8 +57,8 @@ class _InputFieldState extends State<InputField> {
                 suffixIcon: widget.isPassword
                     ? IconButton(
                         icon: Image.asset(
-                          'lib/core/assets/icons/hide_password.png',
-                        ),
+                            'lib/core/assets/icons/hide_password.png',
+                            height: ScreenUtil().setHeight(13)),
                         onPressed: () {
                           setState(() {
                             hidePassword = !hidePassword;
@@ -66,8 +66,9 @@ class _InputFieldState extends State<InputField> {
                         },
                       )
                     : null,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10), vertical: ScreenUtil().setHeight(16)),
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(10),
+                    vertical: ScreenUtil().setHeight(16)),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey[300]!),
                     borderRadius: BorderRadius.circular(18)),

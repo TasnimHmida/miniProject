@@ -1,5 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 
@@ -19,75 +20,83 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: ColorfulSafeArea(
-          child: Column(
+          child:
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-            Stack(alignment: AlignmentDirectional.bottomCenter, children: [
-              Container(
-                height: MediaQuery.of(context).size.height * .5,
-                width: MediaQuery.of(context).size.width * .8,
-                decoration: BoxDecoration(
-                  color: onBoardingColorBeige,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              Image.asset(
-                'lib/core/assets/images/getStarted.png',
-                alignment: AlignmentDirectional.bottomCenter,
-                height: 450,
-              )
-            ]),
-            Text('Let\'s Get Started',
-                style: GoogleFonts.quicksand(
-                    textStyle: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.w600))),
-            Column(
-              children: [
-                Text('Discover the ultimate education app.',
+                Stack(alignment: AlignmentDirectional.center, children: [
+                  Container(
+                    height: ScreenUtil().setHeight(360),
+                    width: ScreenUtil().setWidth(300),
+                    decoration: BoxDecoration(
+                      color: onBoardingColorBeige,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  Image.asset(
+                    'lib/core/assets/images/getStarted.png',
+                    height: ScreenUtil().setHeight(310),
+                  )
+                ]),
+                Text('Let\'s Get Started',
                     style: GoogleFonts.quicksand(
-                        textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ))),
-                Text('Log in now for the best learning',
-                    style: GoogleFonts.quicksand(
-                        textStyle: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w400))),
-                Text('experience!',
-                    style: GoogleFonts.quicksand(
-                        textStyle: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w400))),
-              ],
-            ),
+                        textStyle: TextStyle(
+                            fontSize: 25.sp, fontWeight: FontWeight.w600))),
                 Column(
                   children: [
-                    LoginButton(loginFunction: (){
-                      navigateToLoginScreen();
-                    },),
-                    const SizedBox(height: 15,),
-                    SignUpButton(signUpFunction: (){
-                      navigateToRegisterScreen();
-                    },),
+                    Text('Discover the ultimate education app.',
+                        style: GoogleFonts.quicksand(
+                            textStyle: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                            ))),
+                    Text('Log in now for the best learning',
+                        style: GoogleFonts.quicksand(
+                            textStyle: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.w400))),
+                    Text('experience!',
+                        style: GoogleFonts.quicksand(
+                            textStyle: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.w400))),
+                  ],
+                ),
+                Column(
+                  children: [
+                    LoginButton(
+                      loginFunction: () {
+                        navigateToLoginScreen();
+                      },
+                    ),
+                    SizedBox(
+                    height: ScreenUtil().setHeight(15),
+                    ),
+                    SignUpButton(
+                      signUpFunction: () {
+                        navigateToRegisterScreen();
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox()
-          ]),
+              ],
+            ),
+          )
         ));
   }
 
-
   navigateToLoginScreen() {
-    Navigator.push(context, MaterialPageRoute(builder: (context){
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
       return const LoginScreen();
     }));
   }
+
   navigateToRegisterScreen() {
-    Navigator.push(context, MaterialPageRoute(builder: (context){
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
       return const RegisterScreen();
     }));
+  }
 }
-}
-
-
-
