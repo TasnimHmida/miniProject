@@ -6,7 +6,7 @@ import 'package:mini_project/core/colors.dart';
 import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 import 'package:mini_project/features/auth/presentation/widgets/login_button.dart';
 
-import '../../../main_app/home_screen.dart';
+import '../../../main_app/presentation/screens/home_screen.dart';
 import '../widgets/input_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,14 +20,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: mainColorBlue,
       body: ColorfulSafeArea(
         bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: ScreenUtil().setHeight(80),
               width: MediaQuery.of(context).size.width * .6,
               child: Row(
@@ -59,33 +58,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     vertical: ScreenUtil().setHeight(15),
                     horizontal: ScreenUtil().setWidth(34)),
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: ListView(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Welcome Back !',
-                            style: GoogleFonts.quicksand(
-                                textStyle: TextStyle(
-                                    fontSize: 25.sp,
-                                    fontWeight: FontWeight.w600))),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        Text('Discover the ultimate education app.',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.quicksand(
-                                textStyle: TextStyle(
-                              color: textColorGrey,
-                              fontSize: 17.sp,
-                              fontWeight: FontWeight.w500,
-                            ))),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.all(20.0),
+                      // alignment: Alignment.center,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Welcome Back !',
+                              style: GoogleFonts.quicksand(
+                                  textStyle: TextStyle(
+                                      fontSize: 25.sp,
+                                      fontWeight: FontWeight.w600))),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(20),
+                          ),
+                          Text('Discover the ultimate education app.',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.quicksand(
+                                  textStyle: TextStyle(
+                                color: textColorGrey,
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w500,
+                              ))),
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -104,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             icon: 'lib/core/assets/icons/lock.png',
                             isPassword: true),
                         SizedBox(
-                          height: ScreenUtil().setHeight(20),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -119,6 +122,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(20),
+                        ),
                       ],
                     ),
                     Column(
@@ -127,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           navigateToHomeScreen();
                         }),
                         SizedBox(
-                          height: ScreenUtil().setHeight(20),
+                          height: ScreenUtil().setHeight(30),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -156,6 +162,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(30),
+                    ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -178,9 +187,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                 thickness: 2,
                               )),
                         ]),
-                    Image.asset(
-                      'lib/core/assets/icons/google_and_facebook.png',
-                      // height: 50,
+                    SizedBox(
+                      height: ScreenUtil().setHeight(10),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          child: Image.asset(
+                            'lib/core/assets/icons/google.png',
+                            // height: 50,
+                          ),
+                        ),
+                        SizedBox(width: ScreenUtil().setWidth(10)),
+                        GestureDetector(
+                          child: Image.asset(
+                            'lib/core/assets/icons/facebook.png',
+                            // height: 50,
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/core/colors.dart';
-import 'package:mini_project/features/main_app/data/home_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../onboarding/presentation/widgets/category_card.dart';
+import '../widgets/category_card.dart';
+import '../widgets/text_divider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,75 +22,42 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        elevation: 0,
-        selectedItemColor: mainColorBlue,
-        unselectedItemColor: iconColorBlack,
-        currentIndex: myCurrentIndex,
-        items: [
-          BottomNavigationBarItem(
-              icon: Image.asset('lib/core/assets/icons/wishlist.png',
-                  color: myCurrentIndex == 0 ? mainColorBlue : iconColorBlack),
-              label: 'Wishlist'),
-          BottomNavigationBarItem(
-              icon: Image.asset('lib/core/assets/icons/cart.png',
-                  color: myCurrentIndex == 1 ? mainColorBlue : iconColorBlack),
-              label: 'Cart'),
-          BottomNavigationBarItem(
-              icon: Image.asset('lib/core/assets/icons/home.png',
-                  color: myCurrentIndex == 2 ? mainColorBlue : iconColorBlack),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Image.asset('lib/core/assets/icons/notification.png',
-                  color: myCurrentIndex == 3 ? mainColorBlue : iconColorBlack),
-              label: 'Notification'),
-          BottomNavigationBarItem(
-              icon: Image.asset('lib/core/assets/icons/user_home.png',
-                  color: myCurrentIndex == 4 ? mainColorBlue : iconColorBlack),
-              label: 'Profile'),
-        ],
-        onTap: (newIndex) {
-          setState(() {
-            myCurrentIndex = newIndex;
-          });
-        },
-      ),
+      resizeToAvoidBottomInset: false,
+      bottomNavigationBar: _buildNavigationBar(),
       body: ColorfulSafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10)),
+          padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10), vertical: ScreenUtil().setHeight(5)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: ScreenUtil().setHeight(70),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: homeScreenColorOrange,
-                      child: Image.asset(
-                        'lib/core/assets/images/avatar.png',
-                        height: ScreenUtil().setHeight(87),
-                        width: ScreenUtil().setWidth(56),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: homeScreenColorOrange,
+                    child: Image.asset(
+                      'lib/core/assets/images/avatar.png',
+                      height: ScreenUtil().setHeight(87),
+                      width: ScreenUtil().setWidth(56),
                     ),
-                    Text(
-                      'Hello ! Sabrine',
-                      style: GoogleFonts.quicksand(
-                          fontSize: 18.sp, fontWeight: FontWeight.w500),
-                    ),
-                    Image.asset('lib/core/assets/icons/cart.png',
-                        color: mainColorBlue,
-                        height: ScreenUtil().setHeight(23))
-                  ],
-                ),
+                  ),
+                  Text(
+                    'Hello ! Sabrine',
+                    style: GoogleFonts.quicksand(
+                        fontSize: 18.sp, fontWeight: FontWeight.w500),
+                  ),
+                  Image.asset('lib/core/assets/icons/cart.png',
+                      color: mainColorBlue,
+                      height: ScreenUtil().setHeight(23))
+                ],
               ),
+              SizedBox(),
               const TextDivider(text: 'Promotion'),
               Container(
                 margin: EdgeInsets.symmetric(
                     vertical: ScreenUtil().setHeight(10),
                     horizontal: ScreenUtil().setWidth(10)),
-                height: ScreenUtil().setHeight(148),
+                height: ScreenUtil().setHeight(160),
                 width: ScreenUtil().setWidth(340),
                 child: PageView(
                   controller: controller,
@@ -110,16 +77,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     activeDotColor: mainColorBlue),
               ),
               const TextDivider(text: 'Category'),
-              Expanded(
+              // SizedBox(height: 20,),
+              SizedBox(
                 child: Padding(
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(20)),
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
                   child: GridView.count(
+                    childAspectRatio: (1 /.8),
+                    primary: true,
+                    shrinkWrap: true,
                     crossAxisCount: 2,
                     crossAxisSpacing: ScreenUtil().setWidth(40),
-                    mainAxisSpacing: ScreenUtil().setHeight(20),
+                    mainAxisSpacing: ScreenUtil().setHeight(10),
                     children: [
                       for (var card in categoryContents)
-                        buildCard(text: card.text, image: card.image)
+                        buildCard(text: card.text, image: card.image, context: context, )
                     ],
                   ),
                 ),
@@ -128,6 +99,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  BottomNavigationBar _buildNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      selectedItemColor: mainColorBlue,
+      unselectedItemColor: iconColorBlack,
+      currentIndex: myCurrentIndex,
+      items: [
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/wishlist.png',
+                color: myCurrentIndex == 0 ? mainColorBlue : iconColorBlack),
+            label: 'Wishlist'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/cart.png',
+                color: myCurrentIndex == 1 ? mainColorBlue : iconColorBlack),
+            label: 'Cart'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/home.png',
+                color: myCurrentIndex == 2 ? mainColorBlue : iconColorBlack),
+            label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/notification.png',
+                color: myCurrentIndex == 3 ? mainColorBlue : iconColorBlack),
+            label: 'Notification'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/user_home.png',
+                color: myCurrentIndex == 4 ? mainColorBlue : iconColorBlack),
+            label: 'Profile'),
+      ],
+      onTap: (newIndex) {
+        setState(() {
+          myCurrentIndex = newIndex;
+        });
+      },
     );
   }
 
@@ -213,33 +221,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class TextDivider extends StatelessWidget {
-  final String text;
 
-  const TextDivider({
-    super.key,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: GoogleFonts.quicksand(
-              color: textColorBlue,
-              fontWeight: FontWeight.w600,
-              fontSize: 15.sp),
-        ),
-        SizedBox(
-          width: ScreenUtil().setWidth(20),
-        ),
-        const Expanded(
-            child: Divider(
-          thickness: .5,
-        ))
-      ],
-    );
-  }
-}

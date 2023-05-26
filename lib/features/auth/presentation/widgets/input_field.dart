@@ -27,61 +27,58 @@ class _InputFieldState extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: ScreenUtil().setHeight(75),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(widget.inputLabel,
-              textAlign: TextAlign.end,
-              style: GoogleFonts.quicksand(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.inputLabel,
+            textAlign: TextAlign.end,
+            style: GoogleFonts.quicksand(
+                textStyle: TextStyle(
+              color: textColorGrey,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+            ))),
+        SizedBox(
+          height: 2.h,
+        ),
+        TextField(
+          obscureText: widget.isPassword
+              ? hidePassword
+                  ? true
+                  : false
+              : false,
+          decoration: InputDecoration(
+              prefixIcon: Image.asset(
+                widget.icon,
+              ),
+              suffixIcon: widget.isPassword
+                  ? IconButton(
+                      icon: Image.asset(
+                          'lib/core/assets/icons/hide_password.png',
+                        ),
+                      onPressed: () {
+                        setState(() {
+                          hidePassword = !hidePassword;
+                        });
+                      },
+                    )
+                  : null,
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(10),
+                  vertical: ScreenUtil().setHeight(16)),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                  borderRadius: BorderRadius.circular(18)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: mainColorBlue),
+                  borderRadius: BorderRadius.circular(18)),
+              hintText: widget.hintText,
+              hintStyle: GoogleFonts.quicksand(
                   textStyle: TextStyle(
-                color: textColorGrey,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              ))),
-          // const SizedBox(
-          //   height: 10,
-          // ),
-          TextField(
-            obscureText: widget.isPassword
-                ? hidePassword
-                    ? true
-                    : false
-                : false,
-            decoration: InputDecoration(
-                prefixIcon: Image.asset(
-                  widget.icon,
-                ),
-                suffixIcon: widget.isPassword
-                    ? IconButton(
-                        icon: Image.asset(
-                            'lib/core/assets/icons/hide_password.png',
-                            height: ScreenUtil().setHeight(13)),
-                        onPressed: () {
-                          setState(() {
-                            hidePassword = !hidePassword;
-                          });
-                        },
-                      )
-                    : null,
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(10),
-                    vertical: ScreenUtil().setHeight(16)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.circular(18)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: mainColorBlue),
-                    borderRadius: BorderRadius.circular(18)),
-                hintText: widget.hintText,
-                hintStyle: GoogleFonts.quicksand(
-                    textStyle: TextStyle(
-                        fontSize: 16.sp, fontWeight: FontWeight.w400))),
-          ),
-        ],
-      ),
+                      fontSize: 16.sp, fontWeight: FontWeight.w400))),
+        ),
+      ],
     );
   }
 }

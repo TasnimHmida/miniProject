@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:mini_project/features/auth/presentation/screens/login_screen.dart';
 
 import '../../../../core/colors.dart';
 
