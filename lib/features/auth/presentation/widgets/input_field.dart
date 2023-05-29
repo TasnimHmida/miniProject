@@ -15,7 +15,7 @@ class InputField extends StatefulWidget {
     required this.inputLabel,
     required this.hintText,
     required this.icon,
-    required this.isPassword,
+    required this.isPassword, required TextEditingController controller,
   });
 
   @override

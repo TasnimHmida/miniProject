@@ -16,6 +16,49 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  passwordAndEmailConfirmed() {
+    if (_passwordController.text.trim().isEmpty ||
+        _confirmPasswordController.text.trim().isEmpty ||
+        _emailController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('no field should be empty'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    }
+
+    if (_passwordController.text.trim().length <= 6) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('password should be at least 6 characters long'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    } else if (_passwordController.text.trim() !=
+        _confirmPasswordController.text.trim()) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('passwords do not match'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    .hasMatch(_emailController.text)){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('email is not valid'),
+        backgroundColor: Colors.red,
+      ));
+      return false;
+    } else {
+      return true;
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,14 +96,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.fromLTRB(
-                    ScreenUtil().setWidth(20), ScreenUtil().setHeight(15),
                     ScreenUtil().setWidth(20),
-                    ScreenUtil().setHeight(5)
-                ),
+                    ScreenUtil().setHeight(15),
+                    ScreenUtil().setWidth(20),
+                    ScreenUtil().setHeight(5)),
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30)),
                 ),
                 child: ListView(
                   children: [
@@ -71,8 +116,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.quicksand(
                                 textStyle: TextStyle(
-                                    fontSize: 22.sp, fontWeight: FontWeight.w600))),
-                        SizedBox(height: 10.h,),
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.w600))),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         SizedBox(
                           // height: ScreenUtil().setHeight(40),
                           child: Column(
@@ -97,14 +145,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 10.h,),
-                        const InputField(
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        InputField(
+                          controller: _nameController,
                           inputLabel: 'Your Name',
                           hintText: 'UserName',
                           icon: 'lib/core/assets/icons/user.png',
                           isPassword: false,
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         SizedBox(
                           height: ScreenUtil().setHeight(75),
                           child: Column(
@@ -129,11 +182,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.grey[300]!),
-                                        borderRadius: BorderRadius.circular(18)),
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: mainColorBlue),
-                                        borderRadius: BorderRadius.circular(18)),
+                                        borderSide: const BorderSide(
+                                            color: mainColorBlue),
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
                                     hintText: ' 50222800',
                                     hintStyle: GoogleFonts.quicksand(
                                         textStyle: TextStyle(
@@ -143,23 +198,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ],
                           ),
                         ),
-                        const InputField(
+                        InputField(
+                          controller: _emailController,
                           inputLabel: 'Your Email',
                           hintText: 'First.lastName@gmail.com',
                           icon: 'lib/core/assets/icons/email.png',
                           isPassword: false,
                         ),
-                        const InputField(
+                        InputField(
+                            controller: _passwordController,
                             inputLabel: 'Password',
                             hintText: '* * * * * * * *',
                             icon: 'lib/core/assets/icons/lock.png',
                             isPassword: true),
-                        const InputField(
+                        InputField(
+                            controller: _confirmPasswordController,
                             inputLabel: 'Confirm Password',
                             hintText: '* * * * * * * * ',
                             icon: 'lib/core/assets/icons/lock.png',
                             isPassword: true),
-                        SizedBox(height: 30.h,),
+                        SizedBox(
+                          height: 30.h,
+                        ),
                         TextButton(
                             style: TextButton.styleFrom(
                                 fixedSize: Size(ScreenUtil().setWidth(320),
@@ -169,7 +229,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 foregroundColor: Colors.white,
                                 backgroundColor: mainColorBlue),
                             onPressed: () {
-                              navigateToHomeScreen();
+                              if (passwordAndEmailConfirmed()) {
+                                navigateToHomeScreen();
+                              }
                             },
                             child: Text(
                               'Sign Up',
@@ -185,6 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ]),
         ));
   }
+
   navigateToHomeScreen() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return const HomeScreen();

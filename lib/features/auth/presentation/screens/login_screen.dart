@@ -17,6 +17,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Column(
                       children: [
-                        const InputField(
+                        InputField(
+                          controller: _emailController,
                           inputLabel: 'Your Email',
                           hintText: 'First.lastName@gmail.com',
                           icon: 'lib/core/assets/icons/email.png',
@@ -101,7 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: ScreenUtil().setHeight(20),
                         ),
-                        const InputField(
+                        InputField(
+                          controller: _passwordController,
                             inputLabel: 'Password',
                             hintText: 'enter password',
                             icon: 'lib/core/assets/icons/lock.png',
@@ -149,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
+
                                 navigateToRegisterScreen();
                               },
                               child: Text('Sign up',
