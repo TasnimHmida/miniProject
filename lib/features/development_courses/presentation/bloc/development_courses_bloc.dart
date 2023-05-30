@@ -21,10 +21,19 @@ class DevelopmentCoursesBloc extends Bloc<DevelopmentCoursesEvent, DevelopmentCo
         emit(LoadingDevelopmentCoursesState());
 
         final failureOrDevelopmentCourses = await getAllDevelopmentCourses();
+
         failureOrDevelopmentCourses.fold(
                 (failure) =>
             {emit(ErrorDevelopmentCoursesState(message: _mapFailureToMessage(failure)))},
                 (developmentCourses) => {emit(LoadedDevelopmentCoursesState(developmentCourses: developmentCourses))});
+      } else if (event is SearchDevelopmentCoursesEvent){
+        emit(LoadingDevelopmentCoursesState());
+
+        final failureOrDevelopmentCourses = await getAllDevelopmentCourses();
+        failureOrDevelopmentCourses.fold(
+                (failure) =>
+            {emit(ErrorDevelopmentCoursesState(message: _mapFailureToMessage(failure)))},
+                (developmentCourses) => {emit(LoadedDevelopmentCoursesState(developmentCourses: developmentCourses.where((element) => element.title.toLowerCase().contains(event.searchKeyword.toLowerCase())).toList()))});
       }
     });
   }

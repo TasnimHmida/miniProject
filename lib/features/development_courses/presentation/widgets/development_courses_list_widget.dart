@@ -6,29 +6,40 @@ import 'package:mini_project/features/development_courses/presentation/screens/d
 import '../../../../core/colors.dart';
 import '../../domain/entities/development_courses.dart';
 
-class DevelopmentCoursesListWidget extends StatelessWidget {
+class DevelopmentCoursesListWidget extends StatefulWidget {
   final List<DevelopmentCourse> developmentCourses;
-  const DevelopmentCoursesListWidget({
-    super.key, required this.developmentCourses,
-  });
+
+  const DevelopmentCoursesListWidget(
+      {super.key, required this.developmentCourses});
+
+  @override
+  State<DevelopmentCoursesListWidget> createState() =>
+      _DevelopmentCoursesListWidgetState();
+}
+
+class _DevelopmentCoursesListWidgetState
+    extends State<DevelopmentCoursesListWidget> {
+  List<DevelopmentCourse> allCourses = [];
+
+  List<DevelopmentCourse> filteredProducts = [];
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: developmentCourses.length,
+      itemCount: widget.developmentCourses.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context){
-              return DevelopmentCourseScreen(developmentCourse: developmentCourses[index]);
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DevelopmentCourseScreen(
+                  developmentCourse: widget.developmentCourses[index]);
             }));
           },
           child: Stack(
             children: [
               Container(
                 margin: EdgeInsets.only(right: 15.w),
-                padding: EdgeInsets.symmetric(
-                    vertical: 5.h, horizontal: 7.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 7.w),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(35),
                     border: Border.all(color: colorPurpleLight)),
@@ -41,30 +52,33 @@ class DevelopmentCoursesListWidget extends StatelessWidget {
                           padding: EdgeInsets.all(5.w),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                  color: colorPurple, width: 2.w)),
-                          child: Image.asset(
-                              'lib/core/assets/images/avatar.png'),
+                              border:
+                                  Border.all(color: colorPurple, width: 2.w)),
+                          child:
+                              Image.asset('lib/core/assets/images/avatar.png'),
                         ),
-                        SizedBox(width: 5.w,),
+                        SizedBox(
+                          width: 5.w,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: MediaQuery.of(context).size.width * .5,
-                              child: Text(developmentCourses[index].title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.quicksand(
-                                      textStyle: TextStyle(
+                              child:
+                                  Text(widget.developmentCourses[index].title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.start,
+                                      style: GoogleFonts.quicksand(
+                                          textStyle: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 13.sp,
                                       ))),
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * .5,
-                              child: Text(developmentCourses[index].body,
+                              child: Text(widget.developmentCourses[index].body,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.start,
                                   style: GoogleFonts.quicksand(
@@ -86,16 +100,16 @@ class DevelopmentCoursesListWidget extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 18.0),
-                          child: Text(developmentCourses[index].id.toString(),
+                          child: Text(
+                              widget.developmentCourses[index].id.toString(),
                               style: GoogleFonts.quicksand(
                                   textStyle: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.sp,
-                                  ))),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.sp,
+                              ))),
                         )
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -107,7 +121,7 @@ class DevelopmentCoursesListWidget extends StatelessWidget {
                       width: 35.w,
                       padding: EdgeInsets.all(5.w),
                       decoration: BoxDecoration(
-                          boxShadow:  [
+                          boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 1,
@@ -116,17 +130,18 @@ class DevelopmentCoursesListWidget extends StatelessWidget {
                           ],
                           color: mainColorBlue,
                           borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                              color: colorPurple, width: 2.w)),
-                      child: Image.asset('lib/core/assets/icons/right_arrow.png'))
-
-              )
+                          border: Border.all(color: colorPurple, width: 2.w)),
+                      child:
+                          Image.asset('lib/core/assets/icons/right_arrow.png')))
             ],
           ),
         );
-      }, separatorBuilder: (BuildContext context, int index) {
-      return SizedBox(height: 15.h,);
-    },
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(
+          height: 15.h,
+        );
+      },
     );
   }
 }

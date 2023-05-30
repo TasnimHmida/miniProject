@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
                 // RegisterScreen()
                 // LoginScreen()
                 // HomeScreen()
-                // showHome? const GetStartedScreen() :
+                showHome? const GetStartedScreen() :
                 const OnBoardingView(),
                 // DevelopmentScreen()
             ),

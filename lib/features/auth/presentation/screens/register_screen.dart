@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:mini_project/features/auth/presentation/widgets/passwords_input_fields.dart';
 
 import '../../../../core/colors.dart';
 import '../../../main_app/presentation/screens/home_screen.dart';
@@ -22,41 +23,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  passwordAndEmailConfirmed() {
-    if (_passwordController.text.trim().isEmpty ||
-        _confirmPasswordController.text.trim().isEmpty ||
-        _emailController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('no field should be empty'),
-        backgroundColor: Colors.red,
-      ));
-      return false;
-    }
+  final _form = GlobalKey<FormState>();
+  bool _isValid = false;
 
-    if (_passwordController.text.trim().length <= 6) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('password should be at least 6 characters long'),
-        backgroundColor: Colors.red,
-      ));
-      return false;
-    } else if (_passwordController.text.trim() !=
-        _confirmPasswordController.text.trim()) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('passwords do not match'),
-        backgroundColor: Colors.red,
-      ));
-      return false;
-    } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-    .hasMatch(_emailController.text)){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('email is not valid'),
-        backgroundColor: Colors.red,
-      ));
-      return false;
-    } else {
-      return true;
-
-    }
+  void _saveForm() {
+    setState(() {
+      _isValid = _form.currentState!.validate();
+    });
   }
 
   @override
@@ -205,18 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           icon: 'lib/core/assets/icons/email.png',
                           isPassword: false,
                         ),
-                        InputField(
-                            controller: _passwordController,
-                            inputLabel: 'Password',
-                            hintText: '* * * * * * * *',
-                            icon: 'lib/core/assets/icons/lock.png',
-                            isPassword: true),
-                        InputField(
-                            controller: _confirmPasswordController,
-                            inputLabel: 'Confirm Password',
-                            hintText: '* * * * * * * * ',
-                            icon: 'lib/core/assets/icons/lock.png',
-                            isPassword: true),
+                        PasswordsInputFields(),
                         SizedBox(
                           height: 30.h,
                         ),
@@ -229,9 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 foregroundColor: Colors.white,
                                 backgroundColor: mainColorBlue),
                             onPressed: () {
-                              if (passwordAndEmailConfirmed()) {
                                 navigateToHomeScreen();
-                              }
                             },
                             child: Text(
                               'Sign Up',
