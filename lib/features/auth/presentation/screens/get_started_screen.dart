@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
 
 import '../../../../core/colors.dart';
-import '../widgets/login_button.dart';
+import '../widgets/blue_button.dart';
 import '../widgets/sign_up_button.dart';
 import 'login_screen.dart';
 
@@ -66,10 +66,10 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 ),
                 Column(
                   children: [
-                    LoginButton(
+                    BlueButton(
                       loginFunction: () {
                         navigateToLoginScreen();
-                      },
+                      }, buttonWidth: 250.w, text: 'Login',
                     ),
                     SizedBox(
                     height: ScreenUtil().setHeight(15),

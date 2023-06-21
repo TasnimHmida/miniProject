@@ -18,21 +18,31 @@ Widget buildCard({required text, required image, required context,}){
     ,
     child: Container(
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: onBoardingColorBlue),
+        color: Colors.white,
+
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(255, 221, 221, 255).withOpacity(0.2),
+            spreadRadius: 1,
+            blurRadius: 10,
+          ),
+        ],
+        border: Border.all(width: 1.4, color: onBoardingColorBlue),
         borderRadius: BorderRadius.circular(11),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 20.h,),
+          // SizedBox(height: 20.h,),
           Expanded(
             child: Image.asset(
               image,
-              height: ScreenUtil().setHeight(78.1),
-              width: ScreenUtil().setWidth(78.1),
+              height: 78.1.h,
+              width: 78.1.w,
             ),
           ),
-          Expanded(
+          Padding(
+            padding: EdgeInsets.only(bottom:8.h),
             child: Text(
               text,
               style: GoogleFonts.poppins(
@@ -71,7 +81,7 @@ List<CategoryContents> categoryContents = [
   ),
   CategoryContents(
     image: 'lib/core/assets/images/english.png',
-    text: 'Development',
+    text: 'Language',
 
   ),
 ];

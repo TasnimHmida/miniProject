@@ -1,8 +1,11 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/core/colors.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../widgets/category_card.dart';
@@ -22,11 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: _buildNavigationBar(),
       body: ColorfulSafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10), vertical: ScreenUtil().setHeight(5)),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 25.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -35,30 +39,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CircleAvatar(
                     backgroundColor: homeScreenColorOrange,
+                    radius: 28,
                     child: Image.asset(
                       'lib/core/assets/images/avatar.png',
-                      height: ScreenUtil().setHeight(87),
-                      width: ScreenUtil().setWidth(56),
+                      fit: BoxFit.fill,
+                      // height: 187,
+                      // width: 156,
                     ),
                   ),
+                  // NotificationBadge(totalNotifications: _totalNotifications),
                   Text(
                     'Hello ! Sabrine',
                     style: GoogleFonts.quicksand(
                         fontSize: 18.sp, fontWeight: FontWeight.w500),
                   ),
                   Image.asset('lib/core/assets/icons/cart.png',
-                      color: mainColorBlue,
-                      height: ScreenUtil().setHeight(23))
+                      color: mainColorBlue, height: ScreenUtil().setHeight(23))
                 ],
               ),
-              SizedBox(),
+              // SizedBox(),
               const TextDivider(text: 'Promotion'),
               Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: ScreenUtil().setHeight(10),
-                    horizontal: ScreenUtil().setWidth(10)),
-                height: ScreenUtil().setHeight(160),
-                width: ScreenUtil().setWidth(340),
+                margin: EdgeInsets.symmetric(horizontal: 5.w),
+                height: 148.h,
+                width: 339.w,
                 child: PageView(
                   controller: controller,
                   children: [
@@ -71,8 +75,10 @@ class _HomeScreenState extends State<HomeScreen> {
               SmoothPageIndicator(
                 controller: controller,
                 count: 3,
-                effect: const WormEffect(
-                    spacing: 16,
+                effect: WormEffect(
+                    spacing: 8,
+                    dotHeight: 9.h,
+                    dotWidth: 9.h,
                     dotColor: Color.fromARGB(255, 184, 184, 203),
                     activeDotColor: mainColorBlue),
               ),
@@ -80,17 +86,21 @@ class _HomeScreenState extends State<HomeScreen> {
               // SizedBox(height: 20,),
               SizedBox(
                 child: Padding(
-                  padding: EdgeInsets.all(ScreenUtil().setWidth(10)),
+                  padding: EdgeInsets.all(10.w),
                   child: GridView.count(
-                    childAspectRatio: (1 /.8),
+                    childAspectRatio: (1),
                     primary: true,
                     shrinkWrap: true,
                     crossAxisCount: 2,
-                    crossAxisSpacing: ScreenUtil().setWidth(40),
-                    mainAxisSpacing: ScreenUtil().setHeight(10),
+                    crossAxisSpacing: 50.w,
+                    mainAxisSpacing: 15.h,
                     children: [
                       for (var card in categoryContents)
-                        buildCard(text: card.text, image: card.image, context: context, )
+                        buildCard(
+                          text: card.text,
+                          image: card.image,
+                          context: context,
+                        )
                     ],
                   ),
                 ),
@@ -102,40 +112,70 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  BottomNavigationBar _buildNavigationBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      elevation: 0,
-      selectedItemColor: mainColorBlue,
-      unselectedItemColor: iconColorBlack,
-      currentIndex: myCurrentIndex,
-      items: [
-        BottomNavigationBarItem(
-            icon: Image.asset('lib/core/assets/icons/wishlist.png',
-                color: myCurrentIndex == 0 ? mainColorBlue : iconColorBlack),
-            label: 'Wishlist'),
-        BottomNavigationBarItem(
-            icon: Image.asset('lib/core/assets/icons/cart.png',
-                color: myCurrentIndex == 1 ? mainColorBlue : iconColorBlack),
-            label: 'Cart'),
-        BottomNavigationBarItem(
-            icon: Image.asset('lib/core/assets/icons/home.png',
-                color: myCurrentIndex == 2 ? mainColorBlue : iconColorBlack),
-            label: 'Home'),
-        BottomNavigationBarItem(
-            icon: Image.asset('lib/core/assets/icons/notification.png',
-                color: myCurrentIndex == 3 ? mainColorBlue : iconColorBlack),
-            label: 'Notification'),
-        BottomNavigationBarItem(
-            icon: Image.asset('lib/core/assets/icons/user_home.png',
-                color: myCurrentIndex == 4 ? mainColorBlue : iconColorBlack),
-            label: 'Profile'),
+  Widget _buildNavigationBar() {
+    return Stack(
+      children: [
+        BottomNavigationBar(
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          elevation: 0,
+          selectedItemColor: mainColorBlue,
+          unselectedItemColor: iconColorBlack,
+          currentIndex: myCurrentIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: Image.asset('lib/core/assets/icons/wishlist.png',
+                    color:
+                        myCurrentIndex == 0 ? mainColorBlue : iconColorBlack),
+                label: 'Wishlist'),
+            BottomNavigationBarItem(
+                icon: Image.asset('lib/core/assets/icons/cart.png',
+                    color:
+                        myCurrentIndex == 1 ? mainColorBlue : iconColorBlack),
+                label: 'Cart'),
+            BottomNavigationBarItem(
+              icon: Image.asset('lib/core/assets/icons/home.png',
+                  color: myCurrentIndex == 2 ? mainColorBlue : iconColorBlack),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+                icon: Image.asset('lib/core/assets/icons/notification.png',
+                    color:
+                        myCurrentIndex == 3 ? mainColorBlue : iconColorBlack),
+                label: 'Notification'),
+            BottomNavigationBarItem(
+                icon: Image.asset('lib/core/assets/icons/user_home.png',
+                    color:
+                        myCurrentIndex == 4 ? mainColorBlue : iconColorBlack),
+                label: 'Profile'),
+          ],
+          onTap: (newIndex) {
+            setState(() {
+              myCurrentIndex = newIndex;
+            });
+          },
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 0,
+          child: Container(
+            height: 2,
+            color: Colors.blue, // Customize the color of the line here
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(5, (index) {
+                return Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    color: myCurrentIndex == index ? const Color.fromARGB(255, 88, 47, 255) : Colors.white,
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
       ],
-      onTap: (newIndex) {
-        setState(() {
-          myCurrentIndex = newIndex;
-        });
-      },
     );
   }
 
@@ -143,9 +183,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       decoration: BoxDecoration(
         color: onBoardingColorBeige,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
@@ -163,10 +204,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w600,
                       color: mainColorBlue),
                 ),
+                SizedBox(
+                  height: 1.h,
+                ),
                 Text(
                   'UI / UX DESIGN',
                   style: GoogleFonts.quicksand(
                       fontSize: 16.sp, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 1.h,
                 ),
                 Row(
                   children: [
@@ -183,42 +230,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 2.h,
+                ),
                 TextButton(
                     style: TextButton.styleFrom(
-                        fixedSize: Size(ScreenUtil().setWidth(100),
-                            ScreenUtil().setHeight(23)),
+                        fixedSize: Size(100.w, 0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
                         foregroundColor: Colors.white,
                         backgroundColor: homeScreenColorOrange),
                     onPressed: () {},
-                    child: const Text(
-                      'Enroll Now',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                    ))
+                    child: Text('Enroll Now',
+                        style: GoogleFonts.quicksand(
+                            fontWeight: FontWeight.w600, fontSize: 10.sp)))
               ],
             ),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                'lib/core/assets/images/figma_logo.png',
-                height: ScreenUtil().setHeight(56),
-                width: ScreenUtil().setWidth(42),
-              ),
-              Image.asset(
-                image,
-                height: ScreenUtil().setHeight(145),
-                width: ScreenUtil().setWidth(118),
-              ),
-            ],
+          // SizedBox(
+          //   width: 15.w,
+          // ),
+          Container(
+            margin: EdgeInsets.only(top: 15.h),
+            child: Image.asset(
+              'lib/core/assets/images/figma_logo.png',
+              // alignment: Alignment.topCenter,
+              // height: 56.h,
+              // width: 42.w,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 22.h),
+            child: Image.asset(
+              image,
+              // alignment: Alignment.centerLeft,
+              // height: 150.h,
+              width: 130.w,
+            ),
           )
         ],
       ),
     );
   }
 }
-
-

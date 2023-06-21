@@ -5,8 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/colors.dart';
 
 class PasswordsInputFields extends StatefulWidget {
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
 
   const PasswordsInputFields({
+    required this.passwordController,
+    required this.confirmPasswordController,
     super.key,
   });
 
@@ -17,8 +21,6 @@ class PasswordsInputFields extends StatefulWidget {
 class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
   bool hidePassword = true;
 
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final _form = GlobalKey<FormState>();
   bool _isValid = false;
@@ -42,20 +44,20 @@ class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
               style: GoogleFonts.quicksand(
                   textStyle: TextStyle(
                     color: textColorGrey,
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                   ))),
           SizedBox(
-            height: 2.h,
+            height: 10.h,
           ),
           TextFormField(
-            controller: _passwordController,
+            controller: widget.passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'This field is required';
               }
 
-              if (_passwordController.text.trim().length < 6){
+              if (widget.passwordController.text.trim().length < 6){
                 return 'password must be at least 6 characters long';
               }
 
@@ -64,7 +66,7 @@ class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
             onChanged: (_) {
               _saveForm();
             },
-            obscureText: true
+            obscureText: hidePassword
                 ,
             decoration: InputDecoration(
                 focusedErrorBorder: OutlineInputBorder(
@@ -95,28 +97,31 @@ class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: mainColorBlue),
                     borderRadius: BorderRadius.circular(18)),
-                hintText: '* * * * * * * *',
+                hintText: '● ● ● ● ● ● ● ●',
                 hintStyle: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        fontSize: 16.sp, fontWeight: FontWeight.w400))),
-          ),  Text('Confirm Password',
+                        fontSize: 16.sp, fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 142, 142, 169)))),
+          ),
+          SizedBox(height: 5.h,),
+
+          Text('Confirm Password',
               textAlign: TextAlign.end,
               style: GoogleFonts.quicksand(
                   textStyle: TextStyle(
                     color: textColorGrey,
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                   ))),
           SizedBox(
-            height: 2.h,
+            height: 10.h,
           ),TextFormField(
-            controller: _confirmPasswordController,
+            controller: widget.confirmPasswordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'This field is required';
               }
 
-              if (_passwordController.text.trim() != _confirmPasswordController.text.trim()){
+              if (widget.passwordController.text.trim() != widget.confirmPasswordController.text.trim()){
                 return 'passwords do not match';
               }
 
@@ -125,7 +130,7 @@ class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
             onChanged: (_) {
               _saveForm();
             },
-            obscureText: true
+            obscureText: hidePassword
                 ,
             decoration: InputDecoration(
                 focusedErrorBorder: OutlineInputBorder(
@@ -156,10 +161,10 @@ class _PasswordsInputFieldsState extends State<PasswordsInputFields> {
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: mainColorBlue),
                     borderRadius: BorderRadius.circular(18)),
-                hintText: '* * * * * * * *',
+                hintText: '● ● ● ● ● ● ● ●',
                 hintStyle: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        fontSize: 16.sp, fontWeight: FontWeight.w400))),
+                        fontSize: 16.sp, fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 142, 142, 169)))),
           ),
         ],
       ),

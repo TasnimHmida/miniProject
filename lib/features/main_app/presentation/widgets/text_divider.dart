@@ -15,6 +15,8 @@ class TextDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           text,
@@ -26,9 +28,10 @@ class TextDivider extends StatelessWidget {
         SizedBox(
           width: ScreenUtil().setWidth(20),
         ),
-        const Expanded(
+        Expanded(
             child: Divider(
-              thickness: .5,
+              color: Colors.grey[200],
+              thickness: 1.7,
             ))
       ],
     );

@@ -1,8 +1,11 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:mini_project/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mini_project/features/auth/presentation/widgets/blue_button.dart';
 import 'package:mini_project/features/auth/presentation/widgets/passwords_input_fields.dart';
 
 import '../../../../core/colors.dart';
@@ -19,9 +22,11 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
 
   final _form = GlobalKey<FormState>();
   bool _isValid = false;
@@ -104,15 +109,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: GoogleFonts.quicksand(
                                       textStyle: TextStyle(
                                     color: textColorGrey,
-                                    fontSize: 17.sp,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                   ))),
+                              SizedBox(
+                                height: 8.h,
+                              ),
                               Text('account for a complete experience.',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.quicksand(
                                       textStyle: TextStyle(
                                     color: textColorGrey,
-                                    fontSize: 17.sp,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
                                   ))),
                             ],
@@ -126,13 +134,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           inputLabel: 'Your Name',
                           hintText: 'UserName',
                           icon: 'lib/core/assets/icons/user.png',
-                          isPassword: false,
+                          isPassword: false, marginBottom: 0.h,
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10.h,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(75),
+                          height: ScreenUtil().setHeight(80),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,10 +150,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: GoogleFonts.quicksand(
                                       textStyle: TextStyle(
                                     color: textColorGrey,
-                                    fontSize: 16.sp,
+                                    fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
                                   ))),
+                              SizedBox(height: 5.h,),
                               IntlPhoneField(
+                                controller: _phoneController,
                                 disableLengthCheck: true,
                                 initialCountryCode: 'TN',
                                 decoration: InputDecoration(
@@ -166,8 +176,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     hintStyle: GoogleFonts.quicksand(
                                         textStyle: TextStyle(
                                             fontSize: 16.sp,
-                                            fontWeight: FontWeight.w400))),
+                                            fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 142, 142, 169)))),
                               ),
+                              SizedBox(height: 7.h,)
                             ],
                           ),
                         ),
@@ -176,28 +187,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           inputLabel: 'Your Email',
                           hintText: 'First.lastName@gmail.com',
                           icon: 'lib/core/assets/icons/email.png',
-                          isPassword: false,
+                          isPassword: false, marginBottom: 5.h,
                         ),
-                        PasswordsInputFields(),
+                        PasswordsInputFields(passwordController: _passwordController, confirmPasswordController: _confirmPasswordController),
                         SizedBox(
-                          height: 30.h,
+                          height: 10.h,
                         ),
-                        TextButton(
-                            style: TextButton.styleFrom(
-                                fixedSize: Size(ScreenUtil().setWidth(320),
-                                    ScreenUtil().setHeight(48)),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                foregroundColor: Colors.white,
-                                backgroundColor: mainColorBlue),
-                            onPressed: () {
-                                navigateToHomeScreen();
-                            },
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16.sp),
-                            )),
+                        BlueButton(loginFunction: () {
+                          registerUserInfo();
+                          // navigateToHomeScreen();
+                        }, buttonWidth: 350.w, text: 'Sign Up')
                       ],
                     ),
                   ],
@@ -206,6 +205,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ]),
         ));
+  }
+
+  void registerUserInfo(){
+    BlocProvider.of<AuthBloc>(context).add(SignUpRequested(email: _emailController.text.trim(), password: _passwordController.text.trim(), name: _nameController.text.trim(), lastName: _nameController.text.trim(), phone: _phoneController.text.trim(), confirmPassword: _confirmPasswordController.text.trim()));
   }
 
   navigateToHomeScreen() {

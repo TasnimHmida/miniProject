@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/colors.dart';
 
@@ -13,17 +15,17 @@ class SignUpButton extends StatelessWidget {
     return TextButton(
 
         style: TextButton.styleFrom(
-          fixedSize: const Size(250, 48),
+          fixedSize: Size(250.w, 48.h),
           shape: RoundedRectangleBorder(
               side: const BorderSide(color: mainColorBlue, width: 1),
               borderRadius: BorderRadius.circular(16)),
           foregroundColor: mainColorBlue,
         ),
         onPressed: signUpFunction,
-        child: const Text(
+        child: Text(
           'Sign Up',
           style:
-          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          GoogleFonts.quicksand(fontWeight: FontWeight.w600, fontSize: 16),
         ));
   }
 }

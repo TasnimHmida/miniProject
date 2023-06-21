@@ -43,7 +43,10 @@ dependencies:
   get_it:
   internet_connection_checker:
   google_sign_in:
-  flutter_facebook_auth:
+  firebase_core:
+  firebase_messaging:
+  overlay_support:
+  flutter_secure_storage:
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,28 +1,32 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/colors.dart';
 
-class LoginButton extends StatelessWidget {
+class BlueButton extends StatelessWidget {
+  final String text;
+  final double buttonWidth;
   final loginFunction;
-  const LoginButton({
-    super.key, required this.loginFunction,
+  const BlueButton({
+    super.key, required this.loginFunction, required this.buttonWidth, required this.text
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
         style: TextButton.styleFrom(
-            fixedSize: const Size(250, 48),
+            fixedSize: Size(buttonWidth, 44.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16)),
             foregroundColor: Colors.white,
             backgroundColor: mainColorBlue),
         onPressed: loginFunction,
-        child: const Text(
-          'Login',
+        child:Text(
+          text,
           style:
-          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          GoogleFonts.quicksand(fontWeight: FontWeight.w600, fontSize: 16),
         ));
   }
 }

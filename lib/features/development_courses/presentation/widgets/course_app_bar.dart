@@ -12,35 +12,38 @@ class CourseAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: textColorGrey4,
-            )),
-        Spacer(),
-        Text(
-          title,
-          style: GoogleFonts.quicksand(
-              textStyle: TextStyle(
-                  color: textColorBlue,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600)),
-        ),
-        Spacer(),
-        Padding(
-          padding: EdgeInsets.only(right: 25.w),
-          child: Image.asset(
-            'lib/core/assets/icons/cart.png',
-            color: mainColorBlue,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: textColorGrey4,
+              )),
+          Spacer(),
+          Text(
+            title,
+            style: GoogleFonts.quicksand(
+                textStyle: TextStyle(
+                    color: textColorBlue,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w600)),
           ),
-        )
-      ],
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(right: 25.w),
+            child: Image.asset(
+              'lib/core/assets/icons/cart.png',
+              color: mainColorBlue,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

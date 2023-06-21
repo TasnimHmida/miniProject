@@ -9,6 +9,8 @@ class InputField extends StatefulWidget {
   final String hintText;
   final String icon;
   final bool isPassword;
+  final TextEditingController controller;
+  final double marginBottom;
 
   const InputField({
     super.key,
@@ -16,7 +18,8 @@ class InputField extends StatefulWidget {
     required this.hintText,
     required this.icon,
     required this.isPassword,
-    required TextEditingController controller,
+    required this.controller,
+    required this.marginBottom
   });
 
   @override
@@ -25,8 +28,6 @@ class InputField extends StatefulWidget {
 
 class _InputFieldState extends State<InputField> {
   bool hidePassword = true;
-
-  final TextEditingController _controller = TextEditingController();
 
   final _form = GlobalKey<FormState>();
   bool _isValid = false;
@@ -50,14 +51,14 @@ class _InputFieldState extends State<InputField> {
               style: GoogleFonts.quicksand(
                   textStyle: TextStyle(
                 color: textColorGrey,
-                fontSize: 16.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ))),
           SizedBox(
-            height: 2.h,
+            height: 10.h,
           ),
           TextFormField(
-            controller: _controller,
+            controller: widget.controller,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'This field is required';
@@ -70,7 +71,7 @@ class _InputFieldState extends State<InputField> {
               }
 
               if(widget.isPassword){
-                if (_controller.text.trim().length < 6){
+                if (widget.controller.text.trim().length < 6){
                   return 'password must be at least 6 characters long';
                 }
               }
@@ -93,7 +94,7 @@ class _InputFieldState extends State<InputField> {
                     borderSide: BorderSide(color: Colors.red),
                     borderRadius: BorderRadius.circular(18)),
                 prefixIcon: Image.asset(
-                  widget.icon,
+                  widget.icon, height: 10.h,
                 ),
                 suffixIcon: widget.isPassword
                     ? IconButton(
@@ -119,7 +120,9 @@ class _InputFieldState extends State<InputField> {
                 hintText: widget.hintText,
                 hintStyle: GoogleFonts.quicksand(
                     textStyle: TextStyle(
-                        fontSize: 16.sp, fontWeight: FontWeight.w400))),
+                        fontSize: 14.sp, fontWeight: FontWeight.w400, color: const Color.fromARGB(255, 142, 142, 169)))),
+          ),SizedBox(
+            height: widget.marginBottom,
           ),
         ],
       ),

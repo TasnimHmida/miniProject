@@ -21,11 +21,13 @@ class DevelopmentScreen extends StatefulWidget {
 }
 
 class _DevelopmentScreenState extends State<DevelopmentScreen> {
+  int myCurrentIndex = 2;
   final TextEditingController _searchKeyword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _buildNavigationBar(),
       body: ColorfulSafeArea(
         bottom: false,
         child: Padding(
@@ -38,7 +40,7 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                 // onChanged: _onChange(context, _searchKeyword.text.trim()),
                 decoration: InputDecoration(
                     prefixIcon: IconButton(
-                      icon: const Icon(Icons.search),
+                      icon: Image.asset('lib/core/assets/icons/search.png'),
                       onPressed: () {
                         _onChange(context, _searchKeyword.text.trim());
                       },
@@ -47,9 +49,9 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                         Image.asset('lib/core/assets/icons/sliders.png'),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: ScreenUtil().setWidth(10),
-                        vertical: ScreenUtil().setHeight(16)),
+                        vertical: 12.h),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: colorPurple),
+                        borderSide: const BorderSide(color: Color.fromARGB(225, 189, 189, 225)),
                         borderRadius: BorderRadius.circular(57)),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: mainColorBlue),
@@ -58,6 +60,7 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                     hintText: 'Find your course',
                     hintStyle: GoogleFonts.quicksand(
                         textStyle: TextStyle(
+                          color: const Color.fromARGB(255, 176, 176, 176),
                             fontSize: 16.sp, fontWeight: FontWeight.w300))),
               ),
               Padding(
@@ -89,6 +92,44 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  BottomNavigationBar _buildNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      selectedItemColor: mainColorBlue,
+      unselectedItemColor: iconColorBlack,
+      currentIndex: myCurrentIndex,
+      items: [
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/wishlist.png',
+                color: myCurrentIndex == 0 ? mainColorBlue : iconColorBlack),
+            label: 'Wishlist'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/cart.png',
+                color: myCurrentIndex == 1 ? mainColorBlue : iconColorBlack),
+            label: 'Cart'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/home.png',
+                color: myCurrentIndex == 2 ? mainColorBlue : iconColorBlack),
+            label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/notification.png',
+                color: myCurrentIndex == 3 ? mainColorBlue : iconColorBlack),
+            label: 'Notification'),
+        BottomNavigationBarItem(
+            icon: Image.asset('lib/core/assets/icons/user_home.png',
+                color: myCurrentIndex == 4 ? mainColorBlue : iconColorBlack),
+            label: 'Profile'),
+      ],
+      onTap: (newIndex) {
+        setState(() {
+          myCurrentIndex = newIndex;
+        });
+      },
     );
   }
 }

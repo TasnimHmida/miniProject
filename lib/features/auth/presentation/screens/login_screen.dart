@@ -1,10 +1,12 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/core/colors.dart';
+import 'package:mini_project/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:mini_project/features/auth/presentation/screens/register_screen.dart';
-import 'package:mini_project/features/auth/presentation/widgets/login_button.dart';
+import 'package:mini_project/features/auth/presentation/widgets/blue_button.dart';
 
 import '../../../main_app/presentation/screens/home_screen.dart';
 import '../widgets/input_field.dart';
@@ -32,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             SizedBox(
               height: ScreenUtil().setHeight(80),
-              width: MediaQuery.of(context).size.width * .6,
+              width: MediaQuery.of(context).size.width * .58,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -83,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: ScreenUtil().setHeight(20),
                           ),
-                          Text('Discover the ultimate education app.',
+                          Text('Login to your account',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.quicksand(
                                   textStyle: TextStyle(
@@ -96,12 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Column(
                       children: [
+                        SizedBox(
+                          height: ScreenUtil().setHeight(10),
+                        ),
                         InputField(
                           controller: _emailController,
                           inputLabel: 'Your Email',
                           hintText: 'First.lastName@gmail.com',
                           icon: 'lib/core/assets/icons/email.png',
-                          isPassword: false,
+                          isPassword: false, marginBottom: 5.h,
                         ),
                         SizedBox(
                           height: ScreenUtil().setHeight(20),
@@ -109,9 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         InputField(
                           controller: _passwordController,
                             inputLabel: 'Password',
-                            hintText: 'enter password',
+                            hintText: '● ● ● ● ● ● ● ●',
                             icon: 'lib/core/assets/icons/lock.png',
-                            isPassword: true),
+                            isPassword: true, marginBottom: 5.h,),
                         SizedBox(
                           height: ScreenUtil().setHeight(10),
                         ),
@@ -119,6 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
+                              onTap: (){
+
+                              },
                               child: Text('Forgot password?',
                                   style: GoogleFonts.quicksand(
                                       textStyle: TextStyle(
@@ -129,17 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(20),
+                          height: ScreenUtil().setHeight(40),
                         ),
                       ],
                     ),
                     Column(
                       children: [
-                        LoginButton(loginFunction: () {
-                          navigateToHomeScreen();
-                        }),
+                        BlueButton(loginFunction: () {
+                          loginUser();
+                        }, buttonWidth: 300.w, text: 'Login',),
                         SizedBox(
-                          height: ScreenUtil().setHeight(30),
+                          height: ScreenUtil().setHeight(20),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -151,11 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontWeight: FontWeight.w400,
                                         color: textColorGrey2))),
                             SizedBox(
-                              width: ScreenUtil().setWidth(10),
+                              width: ScreenUtil().setWidth(10.w),
                             ),
                             GestureDetector(
                               onTap: (){
-
                                 navigateToRegisterScreen();
                               },
                               child: Text('Sign up',
@@ -170,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(30),
+                      height: ScreenUtil().setHeight(40),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -178,24 +185,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                               width: ScreenUtil().setWidth(97),
                               child: const Divider(
-                                color: textColorGrey3,
+                                color: Color.fromARGB(100, 184, 184, 210),
                                 thickness: 2,
                               )),
+                          SizedBox(width: 10.w,),
                           Text("Or login with",
                               style: GoogleFonts.quicksand(
                                   textStyle: TextStyle(
-                                      fontSize: 14.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w400,
                                       color: textColorGreyDark))),
+                          SizedBox(width: 10.w,),
                           SizedBox(
                               width: ScreenUtil().setWidth(97),
                               child: const Divider(
-                                color: textColorGrey3,
+                                color: Color.fromARGB(100, 184, 184, 210),
                                 thickness: 2,
                               )),
                         ]),
                     SizedBox(
-                      height: ScreenUtil().setHeight(10),
+                      height: 20.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -206,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // height: 50,
                           ),
                         ),
-                        SizedBox(width: ScreenUtil().setWidth(10)),
+                        SizedBox(width: ScreenUtil().setWidth(50)),
                         GestureDetector(
                           child: Image.asset(
                             'lib/core/assets/icons/facebook.png',
@@ -224,6 +233,20 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+
+  void loginUser(){
+    BlocProvider.of<AuthBloc>(context).add(
+      SignInRequested(_emailController.text.trim(), _passwordController.text.trim())
+    );
+    // BlocProvider.of<AuthBloc>(context).add(CheckIfTokenIsStoredEvent());
+  }
+
+  // void forgotPassword(){
+  //   BlocProvider.of<AuthBloc>(context).add(
+  //
+  //   )
+  // }
 
   navigateToHomeScreen() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
