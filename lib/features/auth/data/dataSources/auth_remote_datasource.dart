@@ -15,7 +15,6 @@ abstract class AuthRemoteDataSource {
   Future<Unit> registerUserInfo({required UserInfo userInfo});
 
   Future<Unit> forgetPassword({required String phone, required String type});
-
 }
 
 const baseUrl  = 'https://devstudenthelpapi.softylines.com';

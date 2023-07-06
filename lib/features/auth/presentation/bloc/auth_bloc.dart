@@ -29,13 +29,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckIfTokenIsStoredEvent>((event, emit) async {
       final token = prefUtils.getToken();
       emit(Loading());
-      if (token != null){
-        emit(Authenticated());
-        print('authenticated after CheckIfTokenIsStoredEvent');
-      } else {
-        emit(UnAuthenticated());
-        print('unauthenticated after CheckIfTokenIsStoredEvent');
-      }
+      // if (token != null){
+      //   emit(Authenticated());
+      //   print('authenticated after CheckIfTokenIsStoredEvent');
+      // } else {
+      //   emit(UnAuthenticated());
+      //   print('unauthenticated after CheckIfTokenIsStoredEvent');
+      // }
     });
 
     on<SignInRequested>((event, emit) async {

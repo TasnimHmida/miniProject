@@ -11,7 +11,7 @@ import '../../../../core/widgets/message_display_widget.dart';
 import '../bloc/development_courses_bloc.dart';
 import '../widgets/course_app_bar.dart';
 import '../widgets/development_courses_list_widget.dart';
-import '../widgets/seach_courses_widget.dart';
+import 'package:mini_project/dependency_injection.dart' as di;
 
 class DevelopmentScreen extends StatefulWidget {
   const DevelopmentScreen({Key? key}) : super(key: key);
@@ -26,9 +26,19 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+      di.sl<DevelopmentCoursesBloc>()
+        ..add(GetAllDevelopmentCoursesEvent()),
+      child: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _buildNavigationBar(),
-      body: ColorfulSafeArea(
+      body:
+      ColorfulSafeArea(
         bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
@@ -46,12 +56,13 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                       },
                     ),
                     suffixIcon:
-                        Image.asset('lib/core/assets/icons/sliders.png'),
+                    Image.asset('lib/core/assets/icons/sliders.png'),
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: ScreenUtil().setWidth(10),
                         vertical: 12.h),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color.fromARGB(225, 189, 189, 225)),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(225, 189, 189, 225)),
                         borderRadius: BorderRadius.circular(57)),
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: mainColorBlue),
@@ -60,7 +71,7 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                     hintText: 'Find your course',
                     hintStyle: GoogleFonts.quicksand(
                         textStyle: TextStyle(
-                          color: const Color.fromARGB(255, 176, 176, 176),
+                            color: const Color.fromARGB(255, 176, 176, 176),
                             fontSize: 16.sp, fontWeight: FontWeight.w300))),
               ),
               Padding(
@@ -68,7 +79,7 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
                 child: const TextDivider(text: 'Courses'),
               ),
               Expanded(child:
-                  BlocBuilder<DevelopmentCoursesBloc, DevelopmentCoursesState>(
+              BlocBuilder<DevelopmentCoursesBloc, DevelopmentCoursesState>(
                 builder: (context, state) {
                   if (state is LoadingDevelopmentCoursesState) {
                     return const LoadingWidget();
@@ -135,11 +146,9 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
 }
 
 Future<void> _onRefresh(BuildContext context) async {
-  BlocProvider.of<DevelopmentCoursesBloc>(context)
-      .add(RefreshDevelopmentCoursesEvent());
+  context.read<DevelopmentCoursesBloc>().add(RefreshDevelopmentCoursesEvent());
 }
 
 _onChange(BuildContext context, String searchKeyword) async {
-  BlocProvider.of<DevelopmentCoursesBloc>(context)
-      .add(SearchDevelopmentCoursesEvent(searchKeyword: searchKeyword));
+  context.read<DevelopmentCoursesBloc>().add(SearchDevelopmentCoursesEvent(searchKeyword: searchKeyword));
 }

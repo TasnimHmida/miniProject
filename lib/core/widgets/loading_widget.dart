@@ -6,9 +6,9 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Center(
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
         child: SizedBox(
           height: 30,
           width: 30,

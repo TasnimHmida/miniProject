@@ -53,7 +53,7 @@ Future<void> init() async {
   sl.registerLazySingleton<http.Client>(() => http.Client());
   sl.registerLazySingleton<InternetConnectionChecker>(() => InternetConnectionChecker());
   sl.registerLazySingleton<PrefUtils>(() => PrefUtilsImpl(sharedPreferences: sl()));
-  final flutterSecureStorage =  FlutterSecureStorage();
+  const flutterSecureStorage =  FlutterSecureStorage();
   sl.registerLazySingleton(() => flutterSecureStorage);
 
 }

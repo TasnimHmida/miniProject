@@ -18,7 +18,7 @@ class UserInfoModel extends UserInfo {
     passwordConfirm: passwordConfirm,
     phone: phone,
   );
-  factory UserInfoModel.fromJson(Map<String, dynamic > json) {
+  factory UserInfoModel.fromJson(Map<String, dynamic> json) {
     return UserInfoModel(
       name: json['name'],
       lastname: json["lastname"],

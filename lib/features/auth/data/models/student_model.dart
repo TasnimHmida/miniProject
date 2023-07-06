@@ -19,7 +19,7 @@ class StudentModel extends Student {
 
   factory StudentModel.fromJson(Map<String, dynamic > json) {
     return StudentModel(
-      id: json['id'],
+      id: json['_id'],
       name: json['name'],
       lastname: json["lastname"],
       email: json["email"],
@@ -29,7 +29,7 @@ class StudentModel extends Student {
 
   Map<String, dynamic> toJson() {
     return {
-      'id' : id,
+      '_id' : id,
       'name': name,
       'lastname': lastname,
       'email': email,

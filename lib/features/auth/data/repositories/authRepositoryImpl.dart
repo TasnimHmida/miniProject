@@ -26,6 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
       try {
         final remoteLogin = await authRemoteDataSource.login(
             email: email,password: password,type: type);
+        print(remoteLogin);
         return Right(remoteLogin);
       } on AuthServerException catch (e){
         return Left(AuthServerFailure(message: e.message));
